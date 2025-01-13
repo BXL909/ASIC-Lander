@@ -279,7 +279,7 @@
             gap: 40px;
         }
 
-        #welcome-panel > *:not(a) {
+        #welcome-panel > *:not(a):not(label):not(input) {
             pointer-events: none;
         }
 
@@ -473,6 +473,32 @@
             justify-content: space-between;
             align-items: flex-start;
         }
+
+        #welcome-panel label,
+        #welcome-panel input[type="checkbox"] {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        #easy-mode-indicator {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-100%);
+            font-family: monospace;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            pointer-events: none;
+            margin-left: 10px;
+        }
+
+        #welcome-panel .version {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -497,12 +523,15 @@
             <div class="controls-section">
                 <h2>CONTROLS</h2>
                 <div class="controls">
-                    <span class="control-key">W or ▲</span> <span> - Main Thruster</span>
-                    <span class="control-key">A or ◀</span> <span> - Rotate Left</span>
-                    <span class="control-key">D or ▶</span> <span> - Rotate Right</span>
-                    <span class="control-key"> </span> <span> </span>
-                    <span class="control-key"> </span> <span> </span>
+                    <span class="control-key">W or UP</span> <span> - Main Thruster</span>
+                    <span class="control-key">A or LEFT</span> <span> - Rotate Left</span>
+                    <span class="control-key">D or RIGHT</span> <span> - Rotate Right</span>
                     <span class="control-key">P</span> <span> - Pause / Resume</span>
+                </div>
+                <div class="easy-mode" style="margin-top: 10px;">
+                    <label style="color: rgba(255, 255, 255, 0.6);">
+                        <input type="checkbox" id="easy-mode"> Easy Mode
+                    </label>
                 </div>
             </div>
 
@@ -517,7 +546,7 @@
                 <div class="credits-content">
                     <p>by BXL909</p>
                     <p><a href="https://bxl909.github.io/" target="_blank" style="color: rgba(255, 165, 0, 0.8); text-decoration: underline;">BXL909.GITHUB.IO</a></p>
-                    <p>for more free and open source bitcoin projects or to donate sats 🧡</p>
+                    <p>for more free and open source bitcoin projects or to donate sats <span>&#x1F9E1;</span></p>
                     <div class="logo">
                         <a href="https://bxl909.github.io/" target="_new">
                             <img src="https://btcdir.org/wp-content/uploads/2023/09/miniBXL909.png" alt="BXL909">
@@ -526,6 +555,7 @@
                 </div>
             </div>
         </div>
+        <div class="version">v1.1</div>
     </div>
 
     <div id="hashrates">
@@ -627,6 +657,7 @@
         <div class="cargo-section"><span>BAY2</span></div>
         <div class="cargo-section"><span>BAY3</span></div>
     </div>
+    <div id="easy-mode-indicator" class="hud-hidden">EASY MODE ENABLED - ASIC LANDER CHALLENGES YOU TO MASTER THE ART OF FLYING AND LANDING A ROCKET. IN EASY MODE, THE ROCKET IS FAR MORE FORGIVING OF IMPERFECT LANDINGS, MAKING IT IDEAL FOR PRACTICE. NOTE: HIGH SCORES ACHIEVED IN EASY MODE WILL BE MARKED WITH (E).</div>
     <script>
         class SkyEventManager {
             constructor(game) {  
@@ -3033,7 +3064,8 @@ if (pad.isFreightPad) {
                     'damage-indicator',
                     'altitude-warning',
                     'cargo-indicator',
-                    'cargo-sections'
+                    'cargo-sections',
+                    'easy-mode-indicator'
                 ];
 
                 this.paused = false;
@@ -3106,8 +3138,13 @@ if (pad.isFreightPad) {
                     wasRepaired: false 
                 };
 
+                this.easyMode = false;
                 this.highScores = this.loadHighScores();
                 this.updateHighScoresDisplay();
+                
+                document.getElementById('easy-mode').addEventListener('change', (e) => {
+                    this.easyMode = e.target.checked;
+                });
             }
 
             resizeCanvas() {
@@ -3141,6 +3178,9 @@ if (pad.isFreightPad) {
                 if (pauseButton) {
                     pauseButton.textContent = '❚❚';
                 }
+
+                this.easyMode = document.getElementById('easy-mode').checked;
+                document.getElementById('easy-mode-indicator').style.opacity = this.easyMode ? '1' : '0';
             }
 
             setupInputs() {
@@ -3617,13 +3657,12 @@ if (pad.isFreightPad) {
 
                                 if (isLandingPad) {
                                     const speed = this.lander.getSpeed();
-                                    const angleOk = Math.abs(this.lander.angle % (Math.PI * 2)) < 0.3;
+                                    const angleOk = Math.abs(this.lander.angle % (Math.PI * 2)) < (this.easyMode ? 0.8 : 0.3);
                                     
-                                    if (speed < 12 && angleOk) {
+                                    if ((this.easyMode ? speed < 25 : speed < 12) && angleOk) {
                                         if (this.lander.handleLandingImpact(speed)) {
                                             return 'landed';
                                         } else {
- 
                                             return this.crashWithDamage();
                                         }
                                     }
@@ -3656,9 +3695,9 @@ if (pad.isFreightPad) {
                             bounds.left <= this.mothership.padX + this.mothership.padWidth) {
                             
                             const speed = this.lander.getSpeed();
-                            const angleOk = Math.abs(this.lander.angle % (Math.PI * 2)) < 0.3;
+                            const angleOk = Math.abs(this.lander.angle % (Math.PI * 2)) < (this.easyMode ? 0.8 : 0.3);
                             
-                            if (speed < 12 && angleOk) {
+                            if ((this.easyMode ? speed < 25 : speed < 12) && angleOk) {
                                 if (this.lander.handleLandingImpact(speed)) {
                                     return 'landed';
                                 }
@@ -4071,20 +4110,30 @@ if (pad.isFreightPad) {
 
             loadHighScores() {
                 const scores = localStorage.getItem('asicLanderHighScores');
-                return scores ? JSON.parse(scores) : [];
+                if (!scores) return [];
+                
+                const parsed = JSON.parse(scores);
+                return parsed.map(score => {
+                    if (typeof score === 'number') {
+                        return { value: score, isEasy: false };
+                    }
+                    return score;
+                });
             }
 
             saveHighScore(hashrate) {
-                const score = parseInt(hashrate);
+                const score = {
+                    value: parseInt(hashrate),
+                    isEasy: this.easyMode
+                };
                 
                 const scores = this.loadHighScores();
                 
-                if (!scores.includes(score)) {
+                if (!scores.some(s => s.value === score.value && s.isEasy === score.isEasy)) {
                     scores.push(score);
                 }
                 
-                scores.sort((a, b) => b - a);
-                
+                scores.sort((a, b) => b.value - a.value);
                 scores.splice(5);
                 
                 localStorage.setItem('asicLanderHighScores', JSON.stringify(scores));
@@ -4097,7 +4146,7 @@ if (pad.isFreightPad) {
                 container.innerHTML = this.highScores.map((score, index) => `
                     <div class="score">
                         <span>${index + 1}. </span>
-                        <span class="hashrate">${score} ZH/s</span>
+                        <span class="hashrate">${score.value} ZH/s${score.isEasy ? ' (E)' : ''}</span>
                     </div>
                 `).join('');
 
