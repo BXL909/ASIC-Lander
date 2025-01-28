@@ -263,7 +263,7 @@
 
         #welcome-panel {
             position: fixed;
-            top: 50%;
+            top: 45%; 
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.7);
@@ -353,8 +353,6 @@
             margin-bottom: 10px;
         }
 
-
-
         #welcome-panel .high-scores .score {
             display: flex;
             gap: 5px;  
@@ -425,6 +423,7 @@
             gap: 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
             padding-top: 20px;
+            margin-top: 20px;
         }
 
         #welcome-panel .controls-section,
@@ -499,6 +498,162 @@
             font-size: 12px;
             color: rgba(255, 255, 255, 0.3);
         }
+
+        .gravity-selector {
+            margin: 0px 0;
+            text-align: left;
+        }
+
+        .gravity-title {
+            color: #fff;
+            
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .gravity-options {
+            display: flex;
+            flex-direction: row;  
+            gap: 20px;  
+            justify-content: left;  
+            align-items: left;
+        }
+
+        .gravity-options label {
+            color: #fff;
+            font-size: 12px;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;  
+        }
+
+        .gravity-options label:hover {
+            opacity: 1;
+        }
+
+        .gravity-options input[type="radio"] {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .landing-selector {
+            margin-top: 20px 0;
+            text-align: left;
+        }
+
+        .landing-selector h2 {
+            margin-bottom: 10px;
+        }
+
+        .landing-options {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: left;
+            align-items: left;
+        }
+
+        .landing-options label {
+            color: #fff;
+            font-size: 12px;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .landing-options label:hover {
+            opacity: 1;
+        }
+
+        .options-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 20px;
+            margin-top: 0px;
+        }
+
+        .gravity-selector {
+            text-align: left;
+        }
+
+        .landing-selector {
+            text-align: left;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 20px;
+        }
+
+        .gravity-options {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: left;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .landing-options {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: left;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .performance-selector {
+            text-align: left;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 20px;
+        }
+
+        .performance-options {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: left;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .performance-options label {
+            color: #fff;
+            font-size: 12px;
+            opacity: 0.8;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+
+        .performance-options label:hover {
+            opacity: 1;
+        }
+
+        #performance-options {
+            position: fixed;
+            
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;  
+            text-align: left;
+            padding-top: 10px;
+            pointer-events: auto;
+        }
+
+        #performance-options label {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: monospace;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        #performance-options label:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
@@ -519,6 +674,30 @@
             </div>
         </div>
 
+        <div class="options-section">
+            <div class="gravity-selector">
+                <h2>GRAVITY STRENGTH</h2>
+                <div class="gravity-options">
+                    <label><input type="radio" name="gravity" value="0.01"> V LOW</label>
+                    <label><input type="radio" name="gravity" value="0.02"> LOW</label>
+                    <label><input type="radio" name="gravity" value="0.03"> MED-LOW</label>
+                    <label><input type="radio" name="gravity" value="0.04" checked> MED-HIGH</label>
+                    <label><input type="radio" name="gravity" value="0.05"> HIGH</label>
+                    <label><input type="radio" name="gravity" value="0.06"> V HIGH</label>
+                </div>
+            </div>
+
+            <div class="landing-selector">
+                <h2>LANDING</h2>
+                <div class="landing-options">
+                    <label style="color: rgba(255, 255, 255, 0.6);">
+                        <input type="checkbox" id="easy-mode"> Enable easier landings
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
         <div class="bottom-section">
             <div class="controls-section">
                 <h2>CONTROLS</h2>
@@ -527,10 +706,11 @@
                     <span class="control-key">A or LEFT</span> <span> - Rotate Left</span>
                     <span class="control-key">D or RIGHT</span> <span> - Rotate Right</span>
                     <span class="control-key">P</span> <span> - Pause / Resume</span>
+
                 </div>
-                <div class="easy-mode" style="margin-top: 10px;">
-                    <label style="color: rgba(255, 255, 255, 0.6);">
-                        <input type="checkbox" id="easy-mode"> Easy Mode
+                <div id="performance-options">
+                    <label>
+                        <input type="checkbox" id="reduce-particles"> Performance Mode
                     </label>
                 </div>
             </div>
@@ -555,7 +735,8 @@
                 </div>
             </div>
         </div>
-        <div class="version">v1.1</div>
+
+        <div class="version">v1.2</div>
     </div>
 
     <div id="hashrates">
@@ -581,8 +762,6 @@
                 <div class="label">ROTATION RATE</div>
                 <div class="value" id="rotspeed">0°/s</div>
             </div>
-
-
             <div class="stat">
                 <div class="label">DAMAGE</div>
                 <div class="value" id="damage">0%</div>
@@ -657,7 +836,7 @@
         <div class="cargo-section"><span>BAY2</span></div>
         <div class="cargo-section"><span>BAY3</span></div>
     </div>
-    <div id="easy-mode-indicator" class="hud-hidden">EASY MODE ENABLED - ASIC LANDER CHALLENGES YOU TO MASTER THE ART OF FLYING AND LANDING A ROCKET. IN EASY MODE, THE ROCKET IS FAR MORE FORGIVING OF IMPERFECT LANDINGS, MAKING IT IDEAL FOR PRACTICE. NOTE: HIGH SCORES ACHIEVED IN EASY MODE WILL BE MARKED WITH (E).</div>
+    <div id="easy-mode-indicator" class="hud-hidden">EASIER LANDINGS ENABLED - ASIC LANDER CHALLENGES YOU TO MASTER THE ART OF FLYING AND LANDING A ROCKET. WITH EASIER LANDINGS ENABLED, THE ROCKET IS FAR MORE FORGIVING OF IMPERFECT LANDINGS, MAKING IT IDEAL FOR PRACTICE. NOTE: HIGH SCORES ACHIEVED WITH EASIER LANDINGS ENABLED WILL BE LABELLED 'EASY'.</div>
     <script>
         class SkyEventManager {
             constructor(game) {  
@@ -769,8 +948,8 @@
 
             getCurrentGradient() {
                 const defaultColors = {
-                    top: '#000000',
-                    middle: '#080c18',
+                    top: '#05070d',   
+                    middle: '#0a0c19',
                     bottom: '#11172f'
                 };
 
@@ -780,13 +959,13 @@
 
                 const targetColors = this.currentEvent === 'solar_wind' 
                     ? {
-                        top: '#000000',
-                        middle: '#181808',
+                        top: '#0c0c04',   
+                        middle: '#1a1a0a',
                         bottom: '#2f2f11'
                     }
                     : {
-                        top: '#000000',
-                        middle: '#081808',
+                        top: '#050f05',   
+                        middle: '#0b1e0b',
                         bottom: '#112f11'
                     };
 
@@ -979,42 +1158,108 @@
 
             draw(ctx, camera, terrain, offset = 0) {
                 const colors = this.skyEventManager.getCurrentGradient();
-                
-                const gradient = ctx.createLinearGradient(
-                    0, 
-                    -camera.y / camera.zoom, 
-                    0, 
-                    (terrain.height - camera.y) / camera.zoom
-                );
-                
-                gradient.addColorStop(0, colors.top);
-                gradient.addColorStop(0.7, colors.middle);
-                gradient.addColorStop(1, colors.bottom);
-                
-                ctx.fillStyle = gradient;
-                ctx.fillRect(
-                    -camera.x + offset, 
-                    -camera.y, 
-                    terrain.width, 
-                    terrain.height * 2
-                );
+                const performanceMode = document.getElementById('reduce-particles').checked;
 
-                this.stars.forEach(star => {
-                    const parallaxX = camera.x * star.parallax;
-                    const parallaxY = camera.y * star.parallax;
+                if (performanceMode) {
                     
-                    const screenX = (star.x + offset - parallaxX);
-                    const screenY = (star.y - parallaxY);
-                    
-                    const terrainY = terrain.points[0].y; 
-                    const relativeHeight = (terrainY - star.y) / (terrain.height * 0.5);
-                    const opacity = Math.min(1, Math.max(0, relativeHeight));
-                    
-                    ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-                    ctx.beginPath();
-                    ctx.arc(screenX, screenY, star.size, 0, Math.PI * 2);
-                    ctx.fill();
-                });
+                    ctx.fillStyle = colors.top;
+                    ctx.fillRect(
+                        -camera.x + offset,
+                        -camera.y,
+                        terrain.width,
+                        terrain.height * 0.4
+                    );
+
+                    ctx.fillStyle = colors.middle;
+                    ctx.fillRect(
+                        -camera.x + offset,
+                        -camera.y + terrain.height * 0.4,
+                        terrain.width,
+                        terrain.height * 0.3
+                    );
+
+                    const lowerMiddleColor = this.interpolateColors(colors.middle, colors.bottom, 0.5);
+                    ctx.fillStyle = lowerMiddleColor;
+                    ctx.fillRect(
+                        -camera.x + offset,
+                        -camera.y + terrain.height * 0.7,
+                        terrain.width,
+                        terrain.height * 0.4
+                    );
+
+                    ctx.fillStyle = colors.bottom;
+                    ctx.fillRect(
+                        -camera.x + offset,
+                        -camera.y + terrain.height * 1.1,
+                        terrain.width,
+                        terrain.height * 0.4
+                    );
+
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(
+                        -camera.x + offset,
+                        -camera.y + terrain.height * 1.5,
+                        terrain.width,
+                        terrain.height
+                    );
+                } else {
+                    const gradient = ctx.createLinearGradient(
+                        0,
+                        -camera.y / camera.zoom,
+                        0,
+                        (terrain.height - camera.y) / camera.zoom
+                    );
+
+                    gradient.addColorStop(0, '#000000');    
+                    gradient.addColorStop(0.1, '#000000');  
+                    gradient.addColorStop(0.4, colors.top); 
+                    gradient.addColorStop(0.7, colors.middle);
+                    gradient.addColorStop(1, colors.bottom);
+
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(
+                        -camera.x + offset,
+                        -camera.y,
+                        terrain.width,
+                        terrain.height * 2.5
+                    );
+
+                    this.stars.forEach(star => {
+                        const parallaxX = camera.x * star.parallax;
+                        const parallaxY = camera.y * star.parallax;
+                        
+                        const screenX = (star.x + offset - parallaxX);
+                        const screenY = (star.y - parallaxY);
+                        
+                        const terrainY = terrain.points[0].y;
+                        const relativeHeight = (terrainY - star.y) / (terrain.height * 0.5);
+                        const opacity = Math.min(1, Math.max(0, relativeHeight));
+                        
+                        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                        ctx.beginPath();
+                        ctx.arc(screenX, screenY, star.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                }
+            }
+
+            interpolateColors(color1, color2, factor) {
+                const c1 = {
+                    r: parseInt(color1.slice(1,3), 16),
+                    g: parseInt(color1.slice(3,5), 16),
+                    b: parseInt(color1.slice(5,7), 16)
+                };
+                const c2 = {
+                    r: parseInt(color2.slice(1,3), 16),
+                    g: parseInt(color2.slice(3,5), 16),
+                    b: parseInt(color2.slice(5,7), 16)
+                };
+
+                const r = Math.round(c1.r + (c2.r - c1.r) * factor);
+                const g = Math.round(c1.g + (c2.g - c1.g) * factor);
+                const b = Math.round(c1.b + (c2.b - c1.b) * factor);
+
+                return `#${(r << 16 | g << 8 | b).toString(16).padStart(6, '0')}`;
             }
         }
 
@@ -2709,6 +2954,7 @@ if (pad.isFreightPad) {
                 this.repairing = false;
                 this.cargoBoxes = 0; 
                 this.cargoColors = []; 
+                this.gravity = game.gravity;
             }
 
             draw(ctx, camera, offset = 0) {
@@ -2854,7 +3100,6 @@ if (pad.isFreightPad) {
             }
 
             update(canvasWidth, canvasHeight) {
-                const GRAVITY = 0.05;
                 const THRUST_POWER = 0.07;
                 const ROTATION_POWER = 0.0005;
                 const ROTATION_DAMPING = 0.998;
@@ -2901,7 +3146,7 @@ if (pad.isFreightPad) {
                     return;
                 }
 
-                this.vel.y += GRAVITY;
+                this.vel.y += this.gravity;
 
                 this.angularVel *= ROTATION_DAMPING;
                 this.angle += this.angularVel;
@@ -2923,25 +3168,21 @@ if (pad.isFreightPad) {
             }
 
             emitParticles(thrustType) {
-                const mainParticleCount = 6;
-                const sideParticleCount = 3;
-                const mainSpeed = 2;
-                const sideSpeed = 1;
-                const mainLife = 1.5;
-                const sideLife = 1.2;
-                
                 const rotatePoint = (x, y) => {
-                    const cos = Math.cos(this.angle);
-                    const sin = Math.sin(this.angle);
                     return {
-                        x: this.pos.x + (x * cos - y * sin),
-                        y: this.pos.y + (x * sin + y * cos)
+                        x: this.pos.x + (x * Math.cos(this.angle) - y * Math.sin(this.angle)),
+                        y: this.pos.y + (x * Math.sin(this.angle) + y * Math.cos(this.angle))
                     };
                 };
-                
+
+                const mainSpeed = 2;
+                const mainLife = 1;
+                const sideSpeed = 1;
+                const sideLife = 0.5;
+
                 switch(thrustType) {
                     case 'main':
-                        for (let i = 0; i < mainParticleCount; i++) {
+                        for (let i = 0; i < this.game.mainParticleCount; i++) {
                             const emitPoint = rotatePoint(0, this.size);
                             const particleAngle = this.angle + Math.PI/2 + (Math.random() - 0.5) * 0.5;
                             this.particles.push(new Particle(
@@ -2955,7 +3196,7 @@ if (pad.isFreightPad) {
                         }
                         break;
                     case 'right':
-                        for (let i = 0; i < sideParticleCount; i++) {
+                        for (let i = 0; i < this.game.sideParticleCount; i++) {
                             const emitPoint = rotatePoint(-this.size/2, 0);
                             const particleAngle = this.angle + Math.PI + (Math.random() - 0.5) * 0.5;
                             this.particles.push(new Particle(
@@ -2969,7 +3210,7 @@ if (pad.isFreightPad) {
                         }
                         break;
                     case 'left':
-                        for (let i = 0; i < sideParticleCount; i++) {
+                        for (let i = 0; i < this.game.sideParticleCount; i++) {
                             const emitPoint = rotatePoint(this.size/2, 0);
                             const particleAngle = this.angle + 0 + (Math.random() - 0.5) * 0.5;
                             this.particles.push(new Particle(
@@ -2986,7 +3227,6 @@ if (pad.isFreightPad) {
             }
 
             predictTrajectory() {
-                const GRAVITY = 0.05;
                 const PREDICTION_STEPS = 100;
                 const STEP_SIZE = 2;
                 
@@ -3000,7 +3240,7 @@ if (pad.isFreightPad) {
                 let simVelY = this.vel.y;
                 
                 for (let i = 0; i < PREDICTION_STEPS; i++) {
-                    simVelY += GRAVITY * STEP_SIZE;
+                    simVelY += this.gravity * STEP_SIZE;
                     simX += simVelX * STEP_SIZE;
                     simY += simVelY * STEP_SIZE;
                     this.trajectoryPoints.push({ x: simX, y: simY });
@@ -3145,6 +3385,55 @@ if (pad.isFreightPad) {
                 document.getElementById('easy-mode').addEventListener('change', (e) => {
                     this.easyMode = e.target.checked;
                 });
+
+                this.gravity = 0.04; 
+                
+                document.querySelectorAll('input[name="gravity"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        this.gravity = parseFloat(e.target.value);
+                    });
+                });
+
+                const savedGravity = localStorage.getItem('asicLanderGravity') || '0.04'; 
+                const savedEasyMode = localStorage.getItem('asicLanderEasyMode') === 'true';
+                
+                const gravityRadio = document.querySelector(`input[name="gravity"][value="${savedGravity}"]`);
+                if (gravityRadio) {
+                    gravityRadio.checked = true;
+                    this.gravity = parseFloat(savedGravity);
+                }
+                
+                const easyModeCheckbox = document.getElementById('easy-mode');
+                if (easyModeCheckbox) {
+                    easyModeCheckbox.checked = savedEasyMode;
+                    this.easyMode = savedEasyMode;
+                }
+
+                document.querySelectorAll('input[name="gravity"]').forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        this.gravity = parseFloat(e.target.value);
+                        localStorage.setItem('asicLanderGravity', e.target.value);
+                    });
+                });
+
+                document.getElementById('easy-mode').addEventListener('change', (e) => {
+                    this.easyMode = e.target.checked;
+                    localStorage.setItem('asicLanderEasyMode', e.target.checked);
+                });
+
+                document.getElementById('reduce-particles').addEventListener('change', (e) => {
+                    this.mainParticleCount = e.target.checked ? 2 : 6;
+                    this.sideParticleCount = e.target.checked ? 1 : 3;
+                    localStorage.setItem('asicLanderReduceParticles', e.target.checked);
+                });
+
+                const savedReduceParticles = localStorage.getItem('asicLanderReduceParticles') === 'true';
+                const reduceParticlesCheckbox = document.getElementById('reduce-particles');
+                if (reduceParticlesCheckbox) {
+                    reduceParticlesCheckbox.checked = savedReduceParticles;
+                    this.mainParticleCount = savedReduceParticles ? 2 : 6;
+                    this.sideParticleCount = savedReduceParticles ? 1 : 3;
+                }
             }
 
             resizeCanvas() {
@@ -3157,6 +3446,7 @@ if (pad.isFreightPad) {
                 this.stars = new Stars(this.canvas.width, this.canvas.height, this);
                 this.lander = new Lander(this.canvas.width / 2, 100, this);
                 this.lander.terrain = this.terrain;
+                this.lander.gravity = this.gravity; 
                 this.explosionParticles = [];
                 this.gameState = 'playing'; 
                 this.stateTimer = 0;
@@ -3215,10 +3505,16 @@ if (pad.isFreightPad) {
                             this.gameState = 'welcome';
                             document.getElementById('welcome-panel').classList.remove('hud-hidden');
                             document.getElementById('message-display').style.opacity = '0';
-                            document.querySelector('#hashrates .methane .value').textContent = '0 ZH/s';
-                            document.querySelector('#hashrates .geothermal .value').textContent = '0 ZH/s';
-                            document.querySelector('#hashrates .nuclear .value').textContent = '0 ZH/s';
-                            document.querySelector('#hashrates .total .value').textContent = '0 ZH/s';
+                            
+                            const methaneElement = document.querySelector('#hashrates .methane .value');
+                            const geothermalElement = document.querySelector('#hashrates .geothermal .value');
+                            const nuclearElement = document.querySelector('#hashrates .nuclear .value');
+                            const totalElement = document.querySelector('#hashrates .total .value');
+                            
+                            if (methaneElement) methaneElement.textContent = '0 ZH/s';
+                            if (geothermalElement) geothermalElement.textContent = '0 ZH/s';
+                            if (nuclearElement) nuclearElement.textContent = '0 ZH/s';
+                            if (totalElement) totalElement.textContent = '0 ZH/s';
                         }
                     }
                     
@@ -3936,19 +4232,21 @@ if (pad.isFreightPad) {
             }
 
             createExplosion(x, y) {
-                const particleCount = 500;
+                const performanceMode = document.getElementById('reduce-particles').checked;
+                const particleCount = performanceMode ? 100 : 500; 
+                
                 for (let i = 0; i < particleCount; i++) {
-                    const angle = (Math.PI * 2 * i) / particleCount;
-                    const speed = 2 + Math.random() * 3;
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 1 + Math.random() * 3;
                     const particle = new Particle(
                         x,
                         y,
                         angle,
                         speed,
-                        1 + Math.random(),  
-                        0.5  
+                        1 + Math.random(),
+                        0.5
                     );
-                    particle.gravity = 0.05;  
+                    particle.gravity = 0.05;
                     this.explosionParticles.push(particle);
                 }
             }
@@ -4122,14 +4420,22 @@ if (pad.isFreightPad) {
             }
 
             saveHighScore(hashrate) {
+                const gravityRadios = document.getElementsByName('gravity');
+                const selectedGravity = Array.from(gravityRadios).find(radio => radio.checked)?.value || 'moon';
+                
                 const score = {
                     value: parseInt(hashrate),
-                    isEasy: this.easyMode
+                    isEasy: this.easyMode,
+                    gravity: selectedGravity
                 };
                 
                 const scores = this.loadHighScores();
                 
-                if (!scores.some(s => s.value === score.value && s.isEasy === score.isEasy)) {
+                if (!scores.some(s => 
+                    s.value === score.value && 
+                    s.isEasy === score.isEasy && 
+                    s.gravity === score.gravity
+                )) {
                     scores.push(score);
                 }
                 
@@ -4143,12 +4449,25 @@ if (pad.isFreightPad) {
 
             updateHighScoresDisplay() {
                 const container = document.getElementById('high-scores-list');
-                container.innerHTML = this.highScores.map((score, index) => `
-                    <div class="score">
-                        <span>${index + 1}. </span>
-                        <span class="hashrate">${score.value} ZH/s${score.isEasy ? ' (E)' : ''}</span>
-                    </div>
-                `).join('');
+                if (!container) return; 
+                
+                container.innerHTML = this.highScores.map((score, index) => {
+                    const gravityLabel = {
+                        0.01: 'VL.GRAV',
+                        0.02: 'L.GRAV',
+                        0.03: 'ML.GRAV',
+                        0.04: 'MH.GRAV',
+                        0.05: 'H.GRAV',
+                        0.06: 'VH.GRAV'
+                    }[score.gravity || '0.05'];
+                    
+                    return `
+                        <div class="score">
+                            <span>${index + 1}. </span>
+                            <span class="hashrate">${score.value} ZH/s${score.isEasy ? ' (EASY' : ' (NORMAL'}/${gravityLabel})</span>
+                        </div>
+                    `;
+                }).join('');
 
                 while (container.children.length < 5) {
                     const emptyScore = document.createElement('div');
